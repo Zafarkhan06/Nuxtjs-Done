@@ -1,10 +1,61 @@
+<script>
+export default {
+  data() {
+    return {
+      showRegions: false, // Initially hide the regions list
+      selectedRegion: null // Initially no region is selected
+    };
+  },
+  methods: {
+    toggleRegions() {
+      // Toggle the boolean value to show/hide the regions list
+      this.showRegions = !this.showRegions;
+    },
+    selectRegion(region) {
+      // Set the selected region
+      this.selectedRegion = region;
+      // Update the URL based on the selected region
+      switch (region) {
+        case 'USA':
+          this.$router.push('/en-us');
+          break;
+        case 'UK':
+          this.$router.push('/en-uk');
+          break;
+        case 'China':
+          this.$router.push('/en-cn');
+          break;
+        case 'Pakistan':
+          this.$router.push('/en-pk');
+          break;
+        default:
+          break;
+      }
+      // Hide the regions dropdown after selection
+      this.showRegions = false;
+    }
+  }
+};
+</script>
+
 <template>
   <div class="min-h-screen px-5 background flex justify-center">
     <div class="container grid mt-5 mb-10 frame">
       <div class="flex justify-between">
         <p class="text-white text-xl font-medium">Netsol</p>
-        <button class="btn">Regions</button>
+        <div class="drop-down">
+          <button class="btn" @click="toggleRegions">Regions</button>
+          <div v-if="showRegions" class="dropdown">
+            <ul>
+              <li class="border-line"@click="selectRegion('USA')">USA</li>
+              <li @click="selectRegion('UK')">UK</li>
+              <li @click="selectRegion('China')">China</li>
+              <li @click="selectRegion('Pakistan')">Pakistan</li>
+            </ul>
+          </div>
+        </div>
       </div>
+
       <img
         src="assets/images/verticalline.png"
         alt="Netsol Logo"
@@ -187,5 +238,38 @@
   .card:first-of-type {
     padding-left: 40px;
   }
+}
+
+.dropdown {
+  position: absolute;
+  margin-top: 5px;
+  justify-content: start;
+  align-items: start;
+  width: 170px;
+  height: 200px;
+  margin-left: 0px;
+  background-color: #092530;
+  border-radius: 15px;
+  border: 0.5px solid #ffffff;
+}
+
+.dropdown ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown ul li {
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-top: 5px;
+  padding: 8px 0px;
+  cursor: pointer;
+  border-bottom: 1px solid #ffffff;
+}
+
+.dropdown ul li:hover {
+  color: blue;
+  border-bottom: 1px solid blue;
 }
 </style>
